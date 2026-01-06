@@ -25,6 +25,18 @@ public final class Pizza extends Alimento {
 		this.saborPizza = saborPizza;
 	}
 	
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\nPizza:\n");
+		sb.append("\nNome do produto: " + this.getNomeAlimento() + "\n");
+		sb.append("Preço: " + this.getValorAlimento() + "\n");
+		sb.append("Sabor: " + saborPizza.toString());
+
+		return sb.toString();
+	}
+	
 	
 	
 }

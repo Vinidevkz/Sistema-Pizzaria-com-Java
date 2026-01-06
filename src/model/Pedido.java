@@ -9,8 +9,7 @@ import enums.StatusPedido;
 public class Pedido {
 
 	private String nomeCliente;
-	private Double valorPedido;
-	private Integer qtdProdutos;
+	private Double valorPedido = 0.0;
 	private StatusPedido status;
 	private List<Alimento> produtos = new ArrayList<>();
 	
@@ -21,7 +20,6 @@ public class Pedido {
 		super();
 		this.nomeCliente = nomeCliente;
 		this.valorPedido = valorPedido;
-		this.qtdProdutos = qtdProdutos;
 		this.produtos = produtos;
 	}
 
@@ -39,14 +37,6 @@ public class Pedido {
 
 	public void setValorPedido(Double valorPedido) {
 		this.valorPedido = valorPedido;
-	}
-
-	public Integer getQtdProdutos() {
-		return qtdProdutos;
-	}
-
-	public void setQtdProdutos(Integer qtdProdutos) {
-		this.qtdProdutos = qtdProdutos;
 	}
 
 	public List<Alimento> getProdutos() {
@@ -71,8 +61,8 @@ public class Pedido {
 	
 
 
-	public Double valorComDesconto(Double valorCupom, Integer qtdProdutos) {
-		Double valorTotal = this.getValorPedido() - ((this.getValorPedido() * (valorCupom / 100.0)) * qtdProdutos);
+	public Double valorComDesconto(Double valorCupom ,Double somaValorProdutos) {
+		Double valorTotal = somaValorProdutos - (somaValorProdutos * (valorCupom / 100.0));
 		
 		return valorTotal;
 	}

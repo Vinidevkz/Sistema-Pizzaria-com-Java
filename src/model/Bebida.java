@@ -23,6 +23,19 @@ public final class Bebida extends Alimento {
 	public void setSaborBebida(SaboresBebida saborBebida) {
 		this.saborBebida = saborBebida;
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append("\nNome do produto: " + this.getNomeAlimento() + "\n");
+		sb.append("Preço: " + this.getValorAlimento() + "\n");
+		sb.append("Sabor: " + saborBebida.toString());
+
+		return sb.toString();
+	}
+	
+	
 	
 	
 	
