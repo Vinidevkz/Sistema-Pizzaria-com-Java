@@ -1,0 +1,105 @@
+package model;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import entities.Alimento;
+import enums.StatusPedido;
+
+public class Pedido {
+
+	private String nomeCliente;
+	private Double valorPedido;
+	private Integer qtdProdutos;
+	private StatusPedido status;
+	private List<Alimento> produtos = new ArrayList<>();
+	
+	public Pedido() {
+	}
+
+	public Pedido(String nomeCliente, Double valorPedido, Integer qtdProdutos, List<Alimento> produtos) {
+		super();
+		this.nomeCliente = nomeCliente;
+		this.valorPedido = valorPedido;
+		this.qtdProdutos = qtdProdutos;
+		this.produtos = produtos;
+	}
+
+	public String getNomeCliente() {
+		return nomeCliente;
+	}
+
+	public void setNomeCliente(String nomeCliente) {
+		this.nomeCliente = nomeCliente;
+	}
+
+	public Double getValorPedido() {
+		return valorPedido;
+	}
+
+	public void setValorPedido(Double valorPedido) {
+		this.valorPedido = valorPedido;
+	}
+
+	public Integer getQtdProdutos() {
+		return qtdProdutos;
+	}
+
+	public void setQtdProdutos(Integer qtdProdutos) {
+		this.qtdProdutos = qtdProdutos;
+	}
+
+	public List<Alimento> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(Alimento produto) {
+		this.produtos.add(produto);
+	}
+	
+	public StatusPedido getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusPedido status) {
+		this.status = status;
+	}
+	
+	
+	
+	//metodos
+	
+
+
+	public Double valorComDesconto(Double valorCupom, Integer qtdProdutos) {
+		Double valorTotal = this.getValorPedido() - ((this.getValorPedido() * (valorCupom / 100.0)) * qtdProdutos);
+		
+		return valorTotal;
+	}
+	
+	@Override
+	public String toString() {
+	    StringBuilder sb = new StringBuilder();
+
+	    sb.append("======= PEDIDO =======\n");
+	    sb.append("Cliente: ").append(nomeCliente).append("\n");
+	    sb.append("Status: ").append(status).append("\n");
+	    sb.append("Quantidade de produtos: ").append(produtos.size()).append("\n");
+	    sb.append("\n--- Produtos ---\n");
+
+	    for (Alimento alimento : produtos) {
+	        sb.append(alimento).append("\n");
+	    }
+
+	    sb.append("\nValor total do pedido: R$ ")
+	      .append(String.format("%.2f", valorPedido))
+	      .append("\n");
+
+	    sb.append("======================");
+
+	    return sb.toString();
+	}
+
+	
+	
+}
