@@ -8,16 +8,20 @@ import enums.StatusPedido;
 
 public class Pedido {
 
+	private Integer numPedido;
 	private String nomeCliente;
 	private Double valorPedido = 0.0;
 	private StatusPedido status;
 	private List<Alimento> produtos = new ArrayList<>();
 	
 	public Pedido() {
+		this.produtos = new ArrayList<>();
+	    this.status = StatusPedido.AGUARDE;
 	}
 
-	public Pedido(String nomeCliente, Double valorPedido, Integer qtdProdutos, List<Alimento> produtos) {
+	public Pedido(Integer numPedido, String nomeCliente, Double valorPedido, Integer qtdProdutos, List<Alimento> produtos) {
 		super();
+		this.numPedido = numPedido;
 		this.nomeCliente = nomeCliente;
 		this.valorPedido = valorPedido;
 		this.produtos = produtos;
@@ -57,9 +61,19 @@ public class Pedido {
 	
 	
 	
+	
+	
 	//metodos
 	
 
+
+	public Integer getNumPedido() {
+		return numPedido;
+	}
+
+	public void setNumPedido(Integer numPedido) {
+		this.numPedido = numPedido;
+	}
 
 	public Double valorComDesconto(Double valorCupom ,Double somaValorProdutos) {
 		Double valorTotal = somaValorProdutos - (somaValorProdutos * (valorCupom / 100.0));

@@ -26,21 +26,27 @@ public class Main {
 		while(opc != 5) {
 			System.out.println("\n-------Sistema da Pizzaria Vini's-------\n");
 			System.out.println("Menu: \n# 1 -> Criar um novo pedido\n# 2 -> Ver pedidos em aberto\n# 3 -> Concluir um pedido\n# 4 -> Excluir um pedido\n# 5 -> Sair");
-			System.out.print("Selecione uma opção: ");
+			System.out.print("\nSelecione uma opção: ");
 			opc = sc.nextInt();
 			sc.nextLine();
 			
 			switch(opc) {
 			case(1):
 				criarPedido(pedidos);
+				break;
 			case(2):
 				verPedidos(pedidos);
+				break;
 			case(3):
 				concluirPedido(pedidos);
+				break;
 			case(4):
 				excluirPedido(pedidos);
+				break;
 			}
 		}
+		
+		sc.close();
 
 	}
 	
@@ -49,8 +55,6 @@ public class Main {
 		
 		Pedido pedido = new Pedido();
 		pedidos.add(pedido);
-		
-
 		
 		Boolean isFinalizado = false;
 		
@@ -100,7 +104,7 @@ public class Main {
 						SaboresBebida saborBebida = SaboresBebida.valueOf(sabor.toUpperCase());
 						
 						Bebida bebida = new Bebida(nomeBebida, precoBebida, saborBebida);
-						
+						pedido.setProdutos(bebida);
 					}
 				}
 				
@@ -137,11 +141,6 @@ public class Main {
 			}
 		}
 		
-
-		
-
-		
-		
 	}
 	
 	public static void verPedidos(List<Pedido> pedidos) {
@@ -159,12 +158,44 @@ public class Main {
 	
 	public static void concluirPedido(List<Pedido> pedidos) {
 		Scanner sc = new Scanner(System.in);
+		
+		if(pedidos.isEmpty()) {
+			System.out.println("\n############\nNão há pedidos na lista.\n############");
+		}else {
+			System.out.print("Digite o nome do cliente cujo deseja concluir um pedido: ");
+			String nomeCliente = sc.nextLine();
+			
+			Pedido pedido = pedidos.stream().filter(x -> x.getNomeCliente().equals(nomeCliente)).findFirst().orElse(null);
+			
+			if(pedido.equals(null)) {
+				System.out.println("\n############\nNão foi possivel achar pedidos desse cliente na lista.\n############");
+			}else {
+				pedido.setStatus(StatusPedido.CONCLUIDO);;
+			}	
+	}
+		
+
 	}
 	
 	public static void excluirPedido(List<Pedido> pedidos) {
 		Scanner sc = new Scanner(System.in);
+		
+		if(pedidos.isEmpty()) {
+			System.out.println("\n############\nNão há pedidos na lista.\n############");
+		}else {
+				System.out.print("Digite o nome do cliente cujo deseja deletar um pedido: ");
+				String nomeCliente = sc.nextLine();
+				
+				Pedido pedido = pedidos.stream().filter(x -> x.getNomeCliente().equals(nomeCliente)).findFirst().orElse(null);
+				
+				if(pedido.equals(null)) {
+					System.out.println("\n############\nNão foi possivel achar pedidos desse cliente na lista.\n############");
+				}else {
+					pedidos.remove(pedido);
+				}	
+		}
 	}
 	
-	
+
 
 }
