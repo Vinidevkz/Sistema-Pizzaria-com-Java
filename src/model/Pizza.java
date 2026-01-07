@@ -7,8 +7,6 @@ public final class Pizza extends Alimento {
 
 	private SaboresPizza saborPizza;
 
-
-	
 	public Pizza() {
 	}
 

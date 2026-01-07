@@ -23,9 +23,9 @@ public class Main {
 		
 		int opc = 0;
 		
-		while(opc != 5) {
+		while(opc != 6) {
 			System.out.println("\n-------Sistema da Pizzaria Vini's-------\n");
-			System.out.println("Menu: \n# 1 -> Criar um novo pedido\n# 2 -> Ver pedidos em aberto\n# 3 -> Concluir um pedido\n# 4 -> Excluir um pedido\n# 5 -> Sair");
+			System.out.println("Menu: \n# 1 -> Criar um novo pedido\n# 2 -> Ver pedidos em aberto\n# 3 -> Concluir um pedido\n# 4 -> Ver pedidos já concluidos\n# 5 -> Excluir um pedido\n# 6 -> Sair");
 			System.out.print("\nSelecione uma opção: ");
 			opc = sc.nextInt();
 			sc.nextLine();
@@ -41,6 +41,9 @@ public class Main {
 				concluirPedido(pedidos);
 				break;
 			case(4):
+				verPedidosConcluidos(pedidos);
+				break;
+			case(5):
 				excluirPedido(pedidos);
 				break;
 			}
@@ -130,6 +133,12 @@ public class Main {
 				
 				Double valorTotal = pedido.valorComDesconto(valorCupom, valorTotalProdutos);
 				
+				if(pedidos.size() == 1) {
+					pedido.setNumPedido(1);
+				}else {
+					pedido.setNumPedido(pedidos.size() + 1);
+				}
+
 				pedido.setNomeCliente(nomeCliente);
 				pedido.setValorPedido(valorTotal);
 				pedido.setStatus(StatusPedido.AGUARDE);
@@ -162,13 +171,13 @@ public class Main {
 		if(pedidos.isEmpty()) {
 			System.out.println("\n############\nNão há pedidos na lista.\n############");
 		}else {
-			System.out.print("Digite o nome do cliente cujo deseja concluir um pedido: ");
-			String nomeCliente = sc.nextLine();
+			System.out.print("Digite o numero do pedido: ");
+			Integer numPedido = sc.nextInt();
 			
-			Pedido pedido = pedidos.stream().filter(x -> x.getNomeCliente().equals(nomeCliente)).findFirst().orElse(null);
+			Pedido pedido = pedidos.stream().filter(x -> x.getNumPedido().equals(numPedido)).findFirst().orElse(null);
 			
 			if(pedido.equals(null)) {
-				System.out.println("\n############\nNão foi possivel achar pedidos desse cliente na lista.\n############");
+				System.out.println("\n############\nNão foi possivel acha o pedido na lista.\n############");
 			}else {
 				pedido.setStatus(StatusPedido.CONCLUIDO);;
 			}	
@@ -177,21 +186,41 @@ public class Main {
 
 	}
 	
+	public static void verPedidosConcluidos(List<Pedido> pedidos) {
+		Scanner sc = new Scanner(System.in);
+		
+		if(pedidos.isEmpty()) {
+			System.out.println("\n############\nNão há pedidos na lista.\n############");
+		}else {
+			int qtdPedidosConcluidos = 0;
+			for(Pedido p : pedidos) {
+				if(p.getStatus().equals(StatusPedido.CONCLUIDO)) {
+					System.out.println(p);
+					qtdPedidosConcluidos += 1;
+				}
+			}
+			if(qtdPedidosConcluidos == 0) {
+				System.out.println("\n############\nNão há pedidos concluidos na lista.\n############");
+			}
+		}
+	}
+	
 	public static void excluirPedido(List<Pedido> pedidos) {
 		Scanner sc = new Scanner(System.in);
 		
 		if(pedidos.isEmpty()) {
 			System.out.println("\n############\nNão há pedidos na lista.\n############");
 		}else {
-				System.out.print("Digite o nome do cliente cujo deseja deletar um pedido: ");
-				String nomeCliente = sc.nextLine();
+				System.out.print("Digite o numero do pedido: ");
+				Integer numPedido = sc.nextInt();
 				
-				Pedido pedido = pedidos.stream().filter(x -> x.getNomeCliente().equals(nomeCliente)).findFirst().orElse(null);
+				Pedido pedido = pedidos.stream().filter(x -> x.getNumPedido().equals(numPedido)).findFirst().orElse(null);
 				
 				if(pedido.equals(null)) {
-					System.out.println("\n############\nNão foi possivel achar pedidos desse cliente na lista.\n############");
+					System.out.println("\n############\nNão foi possivel achar o pedido na lista.\n############");
 				}else {
 					pedidos.remove(pedido);
+					System.out.println("\n=========PEDIDO DE N°"+numPedido+" REMOVIDO=========\n");
 				}	
 		}
 	}

@@ -85,7 +85,8 @@ public class Pedido {
 	public String toString() {
 	    StringBuilder sb = new StringBuilder();
 
-	    sb.append("======= PEDIDO =======\n");
+	    sb.append("\n======= PEDIDO =======\n");
+	    sb.append("Número pedido: ").append(numPedido).append("\n");
 	    sb.append("Cliente: ").append(nomeCliente).append("\n");
 	    sb.append("Status: ").append(status).append("\n");
 	    sb.append("Quantidade de produtos: ").append(produtos.size()).append("\n");
